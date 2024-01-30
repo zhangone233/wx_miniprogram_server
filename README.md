@@ -1,5 +1,5 @@
-## Koa Server
-一个使用Koa搭建的node服务。
+# wx_miniprogram_server
+wx_miniprogram_server
 
 ### 启动环境
 + Node >= 16.14
@@ -15,6 +15,7 @@ pnpm start
 ### 文件目录
 - app
 - README.md
+- ...
 
 
 ### 格式化方式 (vscode编辑器环境)
