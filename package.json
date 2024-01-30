@@ -1,0 +1,62 @@
+{
+  "name": "wx_miniprogram_server",
+  "version": "0.1.0",
+  "description": "server",
+  "scripts": {
+    "test": "test",
+    "prepare": "husky install",
+    "build": "rm -rf dist && npx tsc && npx tsc-alias",
+    "server": "tsnd --respawn --transpile-only -r tsconfig-paths/register bootstrap.ts",
+    "server:dev": "tsnd --respawn --transpile-only --debug --inspect -r tsconfig-paths/register bootstrap.ts",
+    "start": "cross-env NODE_ENV=development pnpm run server:dev"
+  },
+  "keywords": [
+    "applet",
+    "wx_miniprogram_server"
+  ],
+  "engines": {
+    "node": ">=16.14",
+    "pnpm": ">=8"
+  },
+  "author": "zhangone",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "@koa/router": "^12.0.0",
+    "joi": "^17.9.2",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "koa-logger": "^3.2.1",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.7",
+    "@types/koa": "^2.13.7",
+    "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-logger": "^3.1.2",
+    "@types/koa__cors": "^4.0.0",
+    "@types/koa__router": "^12.0.0",
+    "@types/node": "^16.18.39",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.10.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "node-hmr": "^1.4.0",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.7",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.1.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
