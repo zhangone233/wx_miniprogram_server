@@ -4,6 +4,7 @@ import logger from 'koa-logger';
 import Router from '@koa/router';
 import bodyparser from 'koa-bodyparser';
 import {
+  notFound,
   responseTime,
   captureError,
   extensionArgs
@@ -57,8 +58,7 @@ export const lifeCycle: App.AppLifeCycle<App> = {
         methodNotAllowed() {
           throw new Error('405 不被允许的请求方式');
         }
-      }));
-
-    // todo: 404 status
+      }))
+      .use(notFound());
   },
 };
