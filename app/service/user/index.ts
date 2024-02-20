@@ -3,6 +3,8 @@ import { decrypt } from '@app/utils/decryptData';
 import https, { type RequestOptions } from 'https';
 import { APP_ID, APP_SECRET } from '@app/constant/app';
 
+import querystring from 'querystring';
+
 import type {
   UserLoginReq,
   UserLoginResp,
@@ -14,19 +16,20 @@ export class IndexService extends BaseService {
   async userLogin(req: UserLoginReq): Promise<UserLoginResp> {
     return new Promise((resolve, reject) => {
       const { code } = req;
-      const body = JSON.stringify({
-        code,
+      const queryParams = querystring.stringify({
         appid: APP_ID,
         secret: APP_SECRET,
+        js_code: code,
+        grant_type: 'authorization_code',
       });
 
       const options: RequestOptions = {
-        method: 'POST',
-        path: '/api/apps/v2/jscode2session',
-        host: 'developer.toutiao.com',
+        method: 'GET',
+        path: `/sns/jscode2session?${queryParams}`,
+        host: 'api.weixin.qq.com',
         headers: {
           'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(body),
+          // 'Content-Length': Buffer.byteLength(body),
         },
       };
 
@@ -36,15 +39,15 @@ export class IndexService extends BaseService {
           dataJson += chunkStream.toString();
         });
         res.once('end', () => {
-          const { err_no, err_tips, data }: Code2SessionResp =
+          const { errcode, errmsg, session_key }: Code2SessionResp =
             JSON.parse(dataJson);
-          if (err_no === 0) {
+          if (!errcode && session_key) {
             return resolve({
-              token: data.session_key,
+              token: session_key,
             });
           }
           reject(
-            this._Err.FETCH_FAILED_CODE(err_tips, 'code2Session result fail')
+            this._Err.FETCH_FAILED_CODE(errmsg, 'code2Session result fail')
           );
         });
       });
@@ -59,7 +62,6 @@ export class IndexService extends BaseService {
         );
       });
 
-      request.write(body);
       request.end(() => {
         console.log('request end');
       });

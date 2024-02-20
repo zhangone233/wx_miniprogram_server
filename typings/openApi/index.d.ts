@@ -1,19 +1,16 @@
-
-interface SessionData {
-  /** 用户在当前小程序的 ID，如果请求时有 code 参数才会返回 */
-  openid: string;
-  /** 用户在小程序平台的唯一标识符，请求时有 code 参数才会返回。如果开发者拥有多个小程序，可通过 unionid 来区分用户的唯一性。 */
-  unionid: string;
-  /** 会话密钥，如果请求时有 code 参数才会返回 */
-  session_key: string;
-  /** 匿名用户在当前小程序的 ID，如果请求时有 anonymous_code 参数才会返回 */
-  anonymous_openid?: string;
-}
-
+/**
+ * code2Session
+ * @description 小程序登录。登录成功不会返回errcode等字段，只会返回session_key与openid
+ */
 interface Code2SessionResp {
   /** 错误码 0:成功，其它失败 */
-  err_no: number;
+  errcode?: number;
+  /** 用户唯一标识 */
+  openid?: string;
   /** 错误信息 */
-  err_tips: string;
-  data: SessionData;
+  errmsg?: string;
+  /** 用户在开放平台的唯一标识符，若当前小程序已绑定到微信开放平台账号下会返回，详见 [UnionID 机制说明](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/union-id.html)。 */
+  unionid?: string;
+  /** 会话密钥 */
+  session_key?: string;
 }

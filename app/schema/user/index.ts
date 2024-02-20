@@ -2,6 +2,7 @@ import Joi from 'joi';
 
 export const userLoginReqSchema = Joi.object({
   code: Joi.string().not('').required(),
+  grant_type: Joi.string().not('').optional(),
   // dy_uid: Joi.string().required(),
   // nick_name: Joi.string().required(),
   // avatar: Joi.string().not('').required(),

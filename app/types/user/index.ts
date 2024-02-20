@@ -1,9 +1,6 @@
 export interface UserLoginReq {
-  code: number;
-  dy_uid: string;
-  nick_name: string;
-  avatar: string;
-  anonymous_code?: number;
+  code: string;
+  grant_type?: string;
 }
 
 export interface UserLoginResp {
