@@ -2,6 +2,7 @@ import http from 'http';
 import https from 'https';
 // import hmr from 'node-hmr';
 import routesGen from '@app/router';
+import { createSQLite } from '@app/db';
 import { app, lifeCycle } from './app';
 
 const startHttp = async (callback: http.RequestListener) => {
@@ -19,6 +20,7 @@ const start = async () => {
 
   await lifeCycle.prepare(app);
   await routesGen(app);
+  await createSQLite(app);
 
   const callback: http.RequestListener = app.callback;
   // if (process.env.NODE_ENV === 'development') {
