@@ -39,8 +39,11 @@ export class IndexService extends BaseService {
           dataJson += chunkStream.toString();
         });
         res.once('end', () => {
-          const { errcode, errmsg, session_key }: Code2SessionResp =
+          const { errcode, errmsg, session_key, openid }: Code2SessionResp =
             JSON.parse(dataJson);
+
+          console.log(openid);
+
           if (!errcode && session_key) {
             return resolve({
               token: session_key,
